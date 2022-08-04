@@ -4,7 +4,6 @@ class Grafo
         @cantidad_nodos = 0
         @estructura = {}
         @valores = {}
-        @recorrido = nil
     end
 
     # Crea un Nodo con clave y Valor
@@ -50,44 +49,42 @@ class Grafo
     # cada vez que se ejecute, el camino desde el nodo 'a' hasta un nodo
     # con valor 'v' en una lista de pares clave valor 
     def camino( a, b )
-        # Inicializamos Todos los nodos como no visitados
-        vistos = {}
-        @estructura.each do | nombre, adyacentes|
-            vistos[nombre] = false
-        end
-        # Inicializamos la pila de nodos
-        valor_a = @valores[a]
-        pila = [[a,valor_a]]
-        vistos[a] = true
-        while pila.length > 0
-            actual = pila.last()[0]
-            adyacentes = adyacentes(actual)
-            i = 0
-            n = adyacentes.length
-            while i < n
-                ady = adyacentes[i]
-                if not vistos[ady]
-                    vistos[ady] = true
-                    valor_ady = @valores[ady]
-                    pila.push([ady, valor_ady])
-                    i = 0
-                    n = @estructura[ady].length
-                    actual = pila.last()[0]
-                    adyacentes = adyacentes(actual)
-                    if valor_ady == b
-                        # POR ARREGLAR
-                        @recorrido = Fiber.new do
-                            Fiber.yield pila
-                        end
-                        
-                    end
-                else
-                    i = i + 1
-                end
+        Fiber.new do
+            # Inicializamos Todos los nodos como no visitados
+            vistos = {}
+            @estructura.each do | nombre, adyacentes|
+                vistos[nombre] = false
             end
-            pila.pop()
+            # Inicializamos la pila de nodos
+            valor_a = @valores[a]
+            pila = [[a,valor_a]]
+            vistos[a] = true
+            while pila.length > 0
+                actual = pila.last()[0]
+                adyacentes = adyacentes(actual)
+                i = 0
+                n = adyacentes.length
+                while i < n
+                    ady = adyacentes[i]
+                    if not vistos[ady]
+                        vistos[ady] = true
+                        valor_ady = @valores[ady]
+                        pila.push([ady, valor_ady])
+                        i = 0
+                        n = @estructura[ady].length
+                        actual = pila.last()[0]
+                        adyacentes = adyacentes(actual)
+                        if valor_ady == b
+                                Fiber.yield pila
+                        end
+                    else
+                        i = i + 1
+                    end
+                end
+                pila.pop()
+            end
         end
-    end
+    end 
 end
 
 
@@ -102,5 +99,6 @@ a.agregar_arista(1, 2)
 a.agregar_arista(2, 3)
 a.agregar_arista(2, 4)
 a.imprimir()
-puts a.camino(0, "amable").resume
-puts a.camino(0, "amable").resume
+recorrido = a.camino(0, "amable")
+puts recorrido.resume
+puts recorrido.resume
