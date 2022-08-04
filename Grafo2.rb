@@ -22,6 +22,7 @@ class Grafo
     def agregar_arista( a, b )
         if @estructura.has_key?(a) and @estructura.has_key?(b)
             @estructura[a].append(b)
+            @estructura[b].append(a)
             return true
         else
             return false
@@ -87,18 +88,81 @@ class Grafo
     end 
 end
 
-
-a = Grafo.new
-a.agregar_nodo(0, "hola")
-a.agregar_nodo(1, "mi")
-a.agregar_nodo(2, "gente")
-a.agregar_nodo(3, "amable")
-a.agregar_nodo(4, "amable")
-a.agregar_arista(0, 1)
-a.agregar_arista(1, 2)
-a.agregar_arista(2, 3)
-a.agregar_arista(2, 4)
-a.imprimir()
-recorrido = a.camino(0, "amable")
-puts recorrido.resume
-puts recorrido.resume
+def main
+  continua = true
+  grafo = Grafo.new
+  nodoAlmacenado = nil
+  while continua
+    print '~'
+    b = gets.chomp
+    if b =~ /NUEVOGRAFO/
+      b.slice! 'NUEVOGRAFO'
+      array = b.split(' ', -1)
+      if array.length > 0
+        puts 'No acepta'
+      else
+        grafo = Grafo.new
+      end
+    end
+    if b =~ /NODO/
+      b.slice! 'NODO'
+      array = b.split(' ', -1)
+      if array.length > 2
+        puts 'Solo se debe insertar el nodo y su informacion'
+      else
+        res = grafo.agregar_nodo(array[0], array[1])
+        if res
+          puts 'Se ha introducido el nodo ' + array[0]
+        else
+          puts 'El nodo ' + array[0] + ' ya existe'
+        end
+      end
+    end
+    if b =~ /LADO/
+      b.slice! 'LADO'
+      array = b.split(' ', -1)
+      if array.length > 2
+        puts 'El lado solo contiene dos vertices'
+      else
+        res = grafo.agregar_arista(array[0], array[1])
+        if res
+          puts 'Se ha introducido el lado (' + array[0] + ',' + array[1] + ')'
+        else
+          puts 'No puede introducir el lado (' + array[0] + ',' + array[1] + '), alguno de los nodos no existe'
+        end
+      end
+    end
+    if b =~ /BUSCAR/
+      b.slice! 'BUSCAR'
+      array = b.split(' ', -1)
+      if array.length > 1
+        puts 'Solo se puede hacer la busqueda de la informacion de un nodo'
+      else
+        recorrido = a.camino(0, array[0])
+        path =  recorrido.resume
+        if path[path.length-1].length !=0
+          nodoAlmacenado = path[path.length-1][0]
+        else
+          nodoAlmacenado = 0
+        end
+        puts path
+      end
+    end
+    if b =~ /ITERAR/
+      b.slice! 'ITERAR'
+      array = b.split(' ', -1)
+      if array.length > 1
+        puts 'Solo se puede hacer la busqueda de la informacion de un nodo'
+      else
+        adyacentes = grafo.adyacentes(nodoAlmacenado)
+        recorrido = grafo.camino(adyacentes[0], array[0])
+        puts recorrido.resume
+      end
+    end
+    if b =~ (/SALIR/) || b =~ (/salir/)
+      continua = false
+      puts 'Has salido!'
+    end
+  end
+end
+main
