@@ -2,13 +2,15 @@ class Grafo
 
     def initialize( )
         @cantidad_nodos = 0
+        @informacion = {}
         @estructura = {}
     end
 
 
-    def agregar_nodo( nombre )
+    def agregar_nodo( nombre , info )
         if not @estructura.has_key?( nombre )
             @estructura[nombre] = []
+            @informacion[nombre] = info
             @cantidad_nodos = @cantidad_nodos + 1
             return true
         end
@@ -39,7 +41,7 @@ class Grafo
         end
     end
 
-    def camino( a, b )
+    def camino(info)
 
         # Inicializamos Todos los nodos como no visitados
         vistos = {}
@@ -47,6 +49,7 @@ class Grafo
             vistos[nombre] = false
         end
         # Inicializamos la pila
+        a = @estructura.keys.first
         pila = [a]
         vistos[a] = true
         while pila.length > 0
@@ -63,7 +66,7 @@ class Grafo
                     n = @estructura[ady].length
                     actual = pila.last()
                     adyacentes = adyacentes(actual)
-                    if ady == b
+                    if @informacion[ady] == info
                         return pila
                     end
                 else
@@ -85,7 +88,7 @@ def main()
    continua = true
    grafo = Grafo.new
    while continua
-       puts "Introduce una entrada:"
+       print "~"
        b = gets.chomp
        if b =~ /NUEVOGRAFO/
            b.slice! "NUEVOGRAFO"
@@ -99,11 +102,15 @@ def main()
        if b =~ /NODO/
            b.slice! "NODO"
            array = b.split(' ', -1)
-           if (array.length()>1)
+           if (array.length()>2)
              puts "Solo se debe insertar el nodo"
            else
-             grafo.agregar_nodo(array[0])
-             puts "Se ha introducido el nodo "+array[0]
+             res = grafo.agregar_nodo(array[0],array[1])
+             if (res)
+               puts "Se ha introducido el nodo "+array[0]
+             else
+               puts "El nodo "+array[0]+" ya existe"
+             end
            end
        end
        if b =~ /LADO/
@@ -112,17 +119,21 @@ def main()
            if (array.length()>2)
              puts "El lado solo contiene dos vertices"
            else
-             grafo.agregar_arista(array[0], array[1])
-             puts "Se ha introducido el lado ("+array[0]+","+array[1]+")"
+             res = grafo.agregar_arista(array[0], array[1])
+             if (res)
+               puts "Se ha introducido el lado ("+array[0]+","+array[1]+")"
+             else
+               puts "No puede introducir el lado ("+array[0]+","+array[1]+"), alguno de los nodos no existe"
+             end
            end
        end
        if b =~ /BUSCAR/
            b.slice! "BUSCAR"
            array = b.split(' ', -1)
-           if (array.length()>2)
-             puts "Solo se puede hacer la busqueda entre 2 vertices"
+           if (array.length()>1)
+             puts "Solo se puede hacer la busqueda de la informacion de un nodo"
            else
-             puts grafo.camino(array[0],array[1])
+             puts grafo.camino(array[0])
            end
        end
        if b =~ /SALIR/
