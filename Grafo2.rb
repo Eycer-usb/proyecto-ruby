@@ -75,6 +75,7 @@ class Grafo
                     actual = pila.last()[0]
                     adyacentes = adyacentes(actual)
                     if valor_ady == b
+                        # POR ARREGLAR
                         @recorrido = Fiber.new do
                             Fiber.yield pila
                         end
