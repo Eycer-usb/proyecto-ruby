@@ -90,20 +90,25 @@ def main()
    while continua
        print "~"
        b = gets.chomp
+       b.strip!
+       b.upcase!
        if b =~ /NUEVOGRAFO/
            b.slice! "NUEVOGRAFO"
            array = b.split(' ', -1)
            if (array.length()>0)
-             puts "No acepta"
+             puts "argumento invalido: " + array[0]
            else
              grafo = Grafo.new
+             puts "se ha creado un nuevo grafo"
            end
-       end
-       if b =~ /NODO/
+       
+       elsif b =~ /NODO/
            b.slice! "NODO"
            array = b.split(' ', -1)
-           if (array.length()>2)
-             puts "Solo se debe insertar el nodo"
+           if (array.length() == 0) 
+            puts "Falta el argumento <nodo>"
+           elsif (array.length()>1)
+            puts "Argumento invalido: " + array[1]
            else
              res = grafo.agregar_nodo(array[0],array[1])
              if (res)
@@ -112,12 +117,16 @@ def main()
                puts "El nodo "+array[0]+" ya existe"
              end
            end
-       end
-       if b =~ /LADO/
+       
+       elsif b =~ /LADO/
            b.slice! "LADO"
            array = b.split(' ', -1)
-           if (array.length()>2)
-             puts "El lado solo contiene dos vertices"
+           if (array.length()  == 0) 
+             puts "Falta el argumento <nodo1>"
+           elsif (array.length()  == 1) 
+             puts "Falta el argumento <nodo2>"
+           elsif (array.length()>2)
+             puts "Argumento invalido: " + array[2]
            else
              res = grafo.agregar_arista(array[0], array[1])
              if (res)
@@ -126,34 +135,24 @@ def main()
                puts "No puede introducir el lado ("+array[0]+","+array[1]+"), alguno de los nodos no existe"
              end
            end
-       end
-       if b =~ /BUSCAR/
+       
+       elsif b =~ /BUSCAR/
            b.slice! "BUSCAR"
            array = b.split(' ', -1)
-           if (array.length()>1)
-             puts "Solo se puede hacer la busqueda de la informacion de un nodo"
+           if (array.length == 0)
+             puts "Falta el argumento <nodo>"
+           elsif (array.length()>1)
+             puts "Argumento no reconocido: " + array[1]
            else
              puts grafo.camino(array[0])
            end
-       end
-       if b =~ /SALIR/
+       
+       elsif b =~ /SALIR/
          continua = false
          puts "Has salido!"
+       else 
+         puts "Comando no reconocido"
        end 
    end
 end
 main()
-'''
-a = Grafo.new
-a.agregar_nodo("hola")
-a.agregar_nodo("mi")
-a.agregar_nodo("gente")
-a.agregar_nodo("bella")
-a.agregar_nodo("amable")
-a.agregar_arista("hola", "mi")
-a.agregar_arista("mi", "gente")
-a.agregar_arista("gente", "bella")
-a.agregar_arista("gente", "amable")
-a.imprimir()
-puts a.camino("hola", "amable")
-'''
