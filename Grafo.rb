@@ -93,6 +93,9 @@ def main()
        print "~"
        b = gets.chomp
        b.strip!
+       if (b == "") 
+         next
+       end
        array = b.split(' ', -1)
        if array[0].upcase == "NUEVOGRAFO"
            if (array.length()>1)
