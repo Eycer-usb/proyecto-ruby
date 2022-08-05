@@ -8,7 +8,7 @@ def main()
     continua = true
     grafo = Grafo.new
     nodoAlmacenado = nil
-    print "se ha creado un nuevo grafo\n"
+    print "Se ha creado un nuevo grafo\n"
     while continua
         print "~"
         b = gets.chomp
