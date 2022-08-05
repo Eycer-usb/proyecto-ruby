@@ -98,7 +98,7 @@ def main()
                end
              else
                nodoAlmacenado = nil
-               puts "No se encontro ningun nodo"
+               puts "No se encontro ningun camino"
              end
               
             end
