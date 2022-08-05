@@ -97,8 +97,13 @@ def main()
                     end
                end
              else
-               nodoAlmacenado = nil
-               puts "No se encontro ningun camino"
+                if array[1] == grafo.obtenerPrimerValor()
+                    nodoAlmacenado = [grafo.obtenerPrimeraClave(),array[1]]
+                    puts nodoAlmacenado
+                else
+                    nodoAlmacenado = nil
+                    puts "No se encontro ningun camino"
+                end
              end
               
             end

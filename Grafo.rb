@@ -47,6 +47,18 @@ class Grafo
   def obtenerPrimeraClave()
     return @estructura.keys.first
   end
+
+  ## Retorna el primer valor en el hash o nil si esta vacio el grafo
+  def obtenerPrimerValor()
+    a = obtenerPrimeraClave()
+    if a != nil
+        return @valores[a]
+    else
+        return nil
+    end
+
+    return 
+  end
   
   ## Se reciben la clave de un nodo digamos 'a' como primer argumento y como segundo argumento un valor digamos 'v'. 
   # Se retornara cada vez que se ejecute, el camino desde el nodo 'a' hasta un nodo
