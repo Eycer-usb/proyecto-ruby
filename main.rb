@@ -1,3 +1,4 @@
+require_relative 'Grafo'
 # NUEVOGRAFO hace reset del grafo para escribir uno nuevo sin reiniciar
 # NODO x agrega el nodo x al grafo
 # LADO x y agrega el lado x y al grafo
