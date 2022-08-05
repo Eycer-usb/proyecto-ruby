@@ -44,6 +44,7 @@ class Grafo
       end
   end
 
+  # Retorna la primera clave en el hash o nil si esta vacio el grafo
   def obtenerPrimeraClave()
     return @estructura.keys.first
   end
@@ -63,6 +64,8 @@ class Grafo
           valor_a = @valores[a]
           pila = [[a,valor_a]]
           vistos[a] = true
+
+          #Se inicia DFS
           while pila.length > 0
               actual = pila.last()[0]
               adyacentes = adyacentes(actual)
@@ -79,12 +82,15 @@ class Grafo
                       actual = pila.last()[0]
                       adyacentes = adyacentes(actual)
                       if valor_ady == b
-                              Fiber.yield pila
+                        # si se quiere se puede retomar la ejecucion
+                        Fiber.yield pila
                       end
                   else
                       i = i + 1
                   end
               end
+              # El nodo ya fue recorrido por completo
+              # hacemos backtracking
               pila.pop()
           end
       end
