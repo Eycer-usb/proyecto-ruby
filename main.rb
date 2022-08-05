@@ -1,4 +1,7 @@
 require_relative 'Grafo'
+## La funcion main maneja las entradas del usuario, detecta errores en los string de entrada
+# En caso de algun error, muestra un mensaje de error en la consola y si no, realiza las operaciones sobre el Grafo 
+# El programa cuenta con varios comandos disponibles:
 # NUEVOGRAFO hace reset del grafo para escribir uno nuevo sin reiniciar
 # NODO x agrega el nodo x al grafo
 # LADO x y agrega el lado x y al grafo
@@ -9,7 +12,7 @@ def main()
     grafo = Grafo.new
     nodoAlmacenado = nil
     i = 0
-    print "se ha creado un nuevo grafo\n"
+    print "Se ha creado un nuevo grafo\n"
     while continua
         print "~"
         b = gets.chomp
@@ -68,10 +71,10 @@ def main()
                path =  recorrido.resume
              if path != nil and path[path.length-1].length !=0
                nodoAlmacenado = path[path.length-1][0]
-              puts path
+               puts path
              else
                nodoAlmacenado = nil
-               puts "no se encontro ningun nodo"
+               puts "No se encontro ningun nodo"
              end
               
             end
@@ -81,7 +84,7 @@ def main()
              puts "Argumento no reconocido: " + array[1]
            else
              if (nodoAlmacenado == nil)
-               puts "no hay ningun nodo almacenado"
+               puts "No hay ningun nodo almacenado"
              else
                adyacentes = grafo.adyacentes(nodoAlmacenado)
   
