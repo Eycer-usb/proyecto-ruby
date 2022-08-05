@@ -63,12 +63,12 @@ def main()
             elsif (array.length()>2)
               puts "Argumento no reconocido: " + array[2]
              else
-               recorrido = grafo.camino(0, array[1])
+               recorrido = grafo.camino(grafo.obtenerPrimeraClave(), array[1])
                path =  recorrido.resume
              if path[path.length-1].length !=0
                nodoAlmacenado = path[path.length-1][0]
              else
-               nodoAlmacenado = 0
+               nodoAlmacenado = grafo.obtenerPrimeraClave()
              end
                puts path
              end
