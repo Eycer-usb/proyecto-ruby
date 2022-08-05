@@ -1,4 +1,3 @@
-require_relative 'Grafo'
 # NUEVOGRAFO hace reset del grafo para escribir uno nuevo sin reiniciar
 # NODO x agrega el nodo x al grafo
 # LADO x y agrega el lado x y al grafo
@@ -8,7 +7,8 @@ def main()
     continua = true
     grafo = Grafo.new
     nodoAlmacenado = nil
-    print "Se ha creado un nuevo grafo\n"
+    i = 0
+    print "se ha creado un nuevo grafo\n"
     while continua
         print "~"
         b = gets.chomp
@@ -62,25 +62,31 @@ def main()
               puts "Falta el argumento <informacion>"
             elsif (array.length()>2)
               puts "Argumento no reconocido: " + array[2]
-             else
+            else
                recorrido = grafo.camino(grafo.obtenerPrimeraClave(), array[1])
                path =  recorrido.resume
-             if path[path.length-1].length !=0
+             if path != nil and path[path.length-1].length !=0
                nodoAlmacenado = path[path.length-1][0]
+              puts path
              else
-               nodoAlmacenado = grafo.obtenerPrimeraClave()
+               nodoAlmacenado = nil
+               puts "no se encontro ningun nodo"
              end
-               puts path
-             end
+              
+            end
          elsif array[0].upcase == "ITERAR"
-           if (array.length() == 1) 
-             puts "Falta el parametro <informacion>"
-           elsif (array.length > 2)
-             puts "Argumento no reconocido: " + array[2]
+
+           if (array.length > 1)
+             puts "Argumento no reconocido: " + array[1]
            else
-             adyacentes = grafo.adyacentes(nodoAlmacenado)
-             recorrido = grafo.camino(adyacentes[0], array[1])
-             puts recorrido.resume
+             if (nodoAlmacenado == nil)
+               puts "no hay ningun nodo almacenado"
+             else
+               adyacentes = grafo.adyacentes(nodoAlmacenado)
+  
+               puts adyacentes[i]
+               i = (i+1) % adyacentes.length
+             end
            end
  
         elsif array[0].upcase == "SALIR"
@@ -92,4 +98,3 @@ def main()
     end
  end
  main()
- 
