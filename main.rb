@@ -1,4 +1,4 @@
-require 'Grafo'
+require_relative 'Grafo'
 # NUEVOGRAFO hace reset del grafo para escribir uno nuevo sin reiniciar
 # NODO x agrega el nodo x al grafo
 # LADO x y agrega el lado x y al grafo
@@ -13,6 +13,9 @@ def main()
         print "~"
         b = gets.chomp
         b.strip!
+        if (b == "") 
+          next
+        end
         array = b.split(' ', -1)
         if array[0].upcase == "NUEVOGRAFO"
             if (array.length()>1)
