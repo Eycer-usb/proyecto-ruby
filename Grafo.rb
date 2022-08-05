@@ -1,3 +1,4 @@
+## Implementacion de una estructura de grafo  
 class Grafo
 
   def initialize( )
@@ -6,7 +7,7 @@ class Grafo
       @valores = {}
   end
 
-  # Crea un Nodo con clave y Valor
+  ## Crea un Nodo con clave y Valor
   def agregar_nodo( clave, valor )
       if not @estructura.has_key?( clave )
           @estructura[clave] = []
@@ -17,8 +18,7 @@ class Grafo
       return false
   end
       
-  # Se reciben las claves de los nodos y se inserta
-  # la arista correspondiente entre los dos nodos
+  ## Se reciben las claves de los nodos y se inserta la arista correspondiente entre los dos nodos
   def agregar_arista( a, b )
       if @estructura.has_key?(a) and @estructura.has_key?(b)
           @estructura[a].append(b)
@@ -29,13 +29,12 @@ class Grafo
       end
   end
 
-  # Se imprime la estructura del grafo
+  ## Se imprime la estructura del grafo
   def imprimir()
       puts @estructura
   end
 
-  # Dada una clave se retornan la lista
-  # de adyacencias
+  ## Dada una clave se retornan la lista de adyacencias
   def adyacentes( a )
       if @estructura.has_key?(a)
           return @estructura[a]
@@ -44,14 +43,13 @@ class Grafo
       end
   end
 
-  # Retorna la primera clave en el hash o nil si esta vacio el grafo
+  ## Retorna la primera clave en el hash o nil si esta vacio el grafo
   def obtenerPrimeraClave()
     return @estructura.keys.first
   end
   
-  # Se reciben la clave de un nodo digamos 'a' como primer argumento
-  # y como segundo argumento un valor digamos 'v'. Se retornara
-  # cada vez que se ejecute, el camino desde el nodo 'a' hasta un nodo
+  ## Se reciben la clave de un nodo digamos 'a' como primer argumento y como segundo argumento un valor digamos 'v'. 
+  # Se retornara cada vez que se ejecute, el camino desde el nodo 'a' hasta un nodo
   # con valor 'v' en una lista de pares clave valor 
   def camino( a, b )
       Fiber.new do
