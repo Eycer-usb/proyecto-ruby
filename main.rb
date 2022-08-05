@@ -75,10 +75,12 @@ def main()
                puts "A continuacion el Camino obtenido"
                puts path
                otro = true
+               puts "Desea buscar otro nodo con el mismo valor?"
                while otro
-                    puts "Desea buscar otro nodo con el mismo valor?"
-                    puts "S/N"
+
+                    puts "S/N\n~"
                     input = gets.chomp
+                    input.upcase!
                     if input == "N"
                         otro = false
                     elsif input == "S"
