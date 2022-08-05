@@ -71,7 +71,31 @@ def main()
                path =  recorrido.resume
              if path != nil and path[path.length-1].length !=0
                nodoAlmacenado = path[path.length-1][0]
+               i = 0
+               puts "A continuacion el Camino obtenido"
                puts path
+               otro = true
+               while otro
+                    puts "Desea buscar otro nodo con el mismo valor?"
+                    puts "S/N"
+                    input = gets.chomp
+                    if input == "N"
+                        otro = false
+                    elsif input == "S"
+                        path =  recorrido.resume
+                        if path != nil and path[path.length-1].length !=0
+                            nodoAlmacenado = path[path.length-1][0]
+                            i = 0
+                            puts "A continuacion el Camino obtenido"
+                            puts path
+                        else
+                            puts "No hay mas nodos con este valor"
+                            otro = false
+                        end
+                    elsif input != "N" and input != "S"
+                        puts "Introduzca una respuesta Valida"
+                    end
+               end
              else
                nodoAlmacenado = nil
                puts "No se encontro ningun nodo"
